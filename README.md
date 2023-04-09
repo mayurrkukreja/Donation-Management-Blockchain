@@ -32,7 +32,7 @@ For implementing the concept we use blockchain technology effectively with minim
 
 ### Ideation of our Solution
 
-<img src="https://github.com/mayurrkukreja/buggyBytes-TSEC-Hacks-2022/blob/main/assets/img/ideation.png?raw=true" width="620" height="420">
+<img src="https://github.com/mayurrkukreja/Donation-Management-Blockchain/blob/main/assets/img/ideation.png?raw=true" width="620" height="420">
 
 
 ## Run Locally
