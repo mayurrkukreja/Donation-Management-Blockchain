@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Money</title>
+</head>
+<body>
+    <body>
+        <p><a href="doctor.html"><button type="submit" class="hidden" style='margin-right:16px'>Doctor
+                    Registration</button></a><a href="patient.html"><button type="submit" class="hidden"
+                    style='margin-right:16px'>Patient Registration</button></a><a href="patient_details.html"><button
+                    type="submit" class="hidden" style='margin-right:16px'>View Patient Details</button></a><a
+                href="record_details.html"><button type="submit" class="hidden" style='margin-right:16px'>View Medical
+                    Record</button></a><a href="examine_details.html"><button type="submit" class="hidden"
+                    style='margin-right:16px'>View Patient Examine details</button></a></p>
+    
+        <h1>Donate Money</h1>
+        <script src="https://cdn.jsdelivr.net/npm/web3@1.2.8/dist/web3.js"></script>
+        <script>
+    
+            var account;
+            window.addEventListener('load', async () => {
+    
+    
+                if (typeof window.ethereum !== 'undefined') {
+                    console.log("MetaMask is Available :) !");
+                }
+    
+                // Modern DApp browsers
+                if (window.ethereum) {
+                    window.web3 = new Web3(ethereum);
+    
+                    // To prevent the page reloading when the MetaMask network changes
+                    ethereum.autoRefreshOnNetworkChange = false;
+    
+                    // To Capture the account details from MetaMask
+                    const accounts = await ethereum.enable();
+                    account = accounts[0];
+    
+                }
+                // Legacy DApp browsers
+                else if (window.web3) {
+                    //window.web3 = new Web3(web3.currentProvider);
+                    window.web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/cbd9dc11b30147e9a2cc974be655ef7c"));
+                }
+                // Non-DApp browsers
+                else {
+                    console.log('Non-Ethereum browser detected. Please install MetaMask');
+                }
+    
+            });
+    
+            var abi = [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_to",
+                            "type": "address"
+                        },
+                        {
+                            "internalType": "uint",
+                            "name": "amount",
+                            "type": "uint"
+                        }
+                    ],
+                    "name": "transfer",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                }
+            ]
+            var contractaddress = '0x9076fbf394E33c0084FEC28d38074b713be67C54';
+    
+            function transfer_money() {
+                var myContract = new web3.eth.Contract(abi, contractaddress, { from: account, gasPrice: '5000000', gas: '500000' });
+                var toAddress = document.getElementById("addr").value;
+                var payAmount = document.getElementById("amt").value;
+                var result = myContract.methods.transfer(toAddress, payAmount).send(function (err, result) {
+    
+                    if (err) { console.log(err); }
+                    if (result) { document.getElementById("result").innerHTML = result; }
+    
+                });
+            }
+            
+        </script>
+    
+    
+    
+    
+    
+        <h2>Donate Money</h2>
+    
+        <div class="container">
+            <form>
+                <table style="width:25%">
+                    <tr>
+                        <td>Enter Address _to Pay</td>
+                        <td><input type="text" id="addr" name="id1"></td>
+                    </tr>
+                    <tr>
+                        <td>Enter Amount</td>
+                        <td><input type="text" id="amt" name="name1"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="button" onclick="transfer_money()" value="Register"></td>
+                    </tr>
+                </table>
+    
+            </form>
+        </div>
+        <h3>To get details of a hospital <a href="hospital_details.html">Click Here</a></h3>
+    </body>
+</body>
+</html>
